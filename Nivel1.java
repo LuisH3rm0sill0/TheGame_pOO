@@ -7,6 +7,10 @@ import java.awt.event.*;
 
 class Nivel1 extends JFrame implements KeyListener {
 
+	//JPanel panel;
+	BufferedImage imagenFondo;
+	Krita fondo;
+
 	BufferedImage imagen;
 	BufferedImage subImagen;
 	Personaje personaje;
@@ -15,7 +19,20 @@ class Nivel1 extends JFrame implements KeyListener {
 	public Nivel1() {
 
 		try {
-			imagen = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/professor_walk.png"));
+			imagenFondo = ImageIO.read(new File("NivelPink.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+		fondo = new Krita(imagenFondo);
+
+		//panel = new JPanel();
+		//panel.setLayout(null);
+		//panel.setFocusable(true);
+		//panel.requestFocusInWindow();
+
+
+		try {
+			imagen = ImageIO.read(new File("professor_walk.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
@@ -23,7 +40,10 @@ class Nivel1 extends JFrame implements KeyListener {
 		subImagen = imagen.getSubimage(0,64*3,64,64);
 		personaje = new Personaje(subImagen);
 
+
+		
 		this.add(personaje);
+
 
 		this.setTitle("NIVEL 1");
 		this.setBounds(0, 0, 700, 500);
@@ -31,6 +51,8 @@ class Nivel1 extends JFrame implements KeyListener {
 		this.setVisible(true);
 		this.setResizable(false);
 		this.addKeyListener(this);
+		//this.add(panel);
+		this.add(fondo);
 	}
 
 	public void keyPressed(KeyEvent e) {
