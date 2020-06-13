@@ -7,43 +7,33 @@ import java.awt.event.*;
 
 class Nivel1 extends JFrame implements KeyListener {
 
-	//JPanel panel;
-	BufferedImage imagenFondo;
-	Krita fondo;
+	BufferedImage imagenFondoN1;
+	Krita fondoN1;
 
 	BufferedImage imagen;
 	BufferedImage subImagen;
 	Personaje personaje;
-	int indiceX = 0;
 
 	public Nivel1() {
 
 		try {
-			imagenFondo = ImageIO.read(new File("NivelPink.png"));
+			imagenFondoN1 = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/FondoN1.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-		fondo = new Krita(imagenFondo);
 
-		//panel = new JPanel();
-		//panel.setLayout(null);
-		//panel.setFocusable(true);
-		//panel.requestFocusInWindow();
-
+		fondoN1 = new Krita(imagenFondoN1);
 
 		try {
-			imagen = ImageIO.read(new File("professor_walk.png"));
+			imagen = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/BolaNegra.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
 
-		subImagen = imagen.getSubimage(0,64*3,64,64);
+		subImagen = imagen.getSubimage(0,0,500,500);
 		personaje = new Personaje(subImagen);
 
-
-		
 		this.add(personaje);
-
 
 		this.setTitle("NIVEL 1");
 		this.setBounds(0, 0, 700, 500);
@@ -51,8 +41,8 @@ class Nivel1 extends JFrame implements KeyListener {
 		this.setVisible(true);
 		this.setResizable(false);
 		this.addKeyListener(this);
-		//this.add(panel);
-		this.add(fondo);
+
+		this.add(fondoN1);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -66,28 +56,24 @@ class Nivel1 extends JFrame implements KeyListener {
 		if(t==68)
 		{
 			x = x+5;
-			indiceX = ((indiceX + 1) % 9) * 64;
-			personaje.imagen = imagen.getSubimage(indiceX,64*3,64,64);
+			personaje.imagen = imagen.getSubimage(500,0,500,500);
 		}
 
 		else if(t==65)
 		{
 			x = x-5;
-			indiceX = ((indiceX + 1) % 9) * 64;
-			personaje.imagen = imagen.getSubimage(indiceX,64*1,64,64);
+			personaje.imagen = imagen.getSubimage(0,500,500,500);
 		}
 
 		else if(t==83)
 		{
 			y = y+5;
-			indiceX = ((indiceX + 1) % 9) * 64;
-			personaje.imagen = imagen.getSubimage(indiceX,64*2,64,64);
+			personaje.imagen = imagen.getSubimage(0,0,500,500);
 		}
 		else if(t==87)
 		{
 			y = y-5;
-			indiceX = ((indiceX + 1) % 9) * 64;
-			personaje.imagen = imagen.getSubimage(indiceX,64*0,64,64);
+			personaje.imagen = imagen.getSubimage(500,500,500,500);
 		}
 
 		personaje.setLocation(x,y);

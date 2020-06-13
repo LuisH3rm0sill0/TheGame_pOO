@@ -16,5 +16,6 @@ class Personaje extends JPanel {
 
 		super.paintComponent(g);
 		g.drawImage(imagen, 0, 0, 64, 64, null);
+		setOpaque(false);
 	}
 }

@@ -15,7 +15,7 @@ class VPrincipal extends JFrame implements KeyListener {
 	public VPrincipal() {
 
 		try {
-			imagenFondo = ImageIO.read(new File("Fondo.png"));
+			imagenFondo = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/Fondo.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
