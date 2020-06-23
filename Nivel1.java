@@ -10,6 +10,12 @@ class Nivel1 extends JFrame implements KeyListener {
 	BufferedImage imagenFondoN1;
 	Krita fondoN1;
 
+	// JPanel panel;
+
+	BufferedImage imagenEnemy;
+	BufferedImage subImagenEnemy;
+	EnemigoFig enemy;
+
 	BufferedImage imagen;
 	BufferedImage subImagen;
 	Personaje personaje;
@@ -24,6 +30,20 @@ class Nivel1 extends JFrame implements KeyListener {
 
 		fondoN1 = new Krita(imagenFondoN1);
 
+		/* panel = new CambioFondo();
+		panel.setLayout(null);
+		panel.setFocusable(true);
+		panel.requestFocusInWindow(); */
+
+		try {
+			imagenEnemy = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/BolaEnemy.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
+		enemy = new EnemigoFig(subImagenEnemy);
+		
 		try {
 			imagen = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/BolaNegra.png"));
 		} catch (Exception e) {
@@ -33,8 +53,15 @@ class Nivel1 extends JFrame implements KeyListener {
 		subImagen = imagen.getSubimage(0,0,500,500);
 		personaje = new Personaje(subImagen);
 
-		this.add(personaje);
+		// panel.add(personaje);
+		// panel.add(enemy);
 
+		// panel.addKeyListener(this);
+		// this.add(panel);
+
+		this.add(fondoN1);
+		this.add(enemy);
+		
 		this.setTitle("NIVEL 1");
 		this.setBounds(0, 0, 700, 500);
 		this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -42,51 +69,43 @@ class Nivel1 extends JFrame implements KeyListener {
 		this.setResizable(false);
 		this.addKeyListener(this);
 
-		this.add(fondoN1);
+		this.add(personaje);
 	}
 
 	public void keyPressed(KeyEvent e) {
 
 		int t = e.getKeyCode();
 
-		Point pos = personaje.getLocation();
-		int x = (int)pos.getX();
-		int y = (int)pos.getY();
+		Point posPer = personaje.getLocation();
+		int xp = (int)posPer.getX();
+		int yp = (int)posPer.getY();
 
 		if(t==68)
 		{
-			x = x+5;
+			xp = xp+5;
 			personaje.imagen = imagen.getSubimage(500,0,500,500);
 		}
 
-		else if(t==65)
+		personaje.setLocation(xp,yp);
+
+		Point posEn = enemy.getLocation();
+		int xe = (int)posEn.getX();
+		int ye = (int)posEn.getY();
+
+		if(t==39)
 		{
-			x = x-5;
-			personaje.imagen = imagen.getSubimage(0,500,500,500);
+			xe = xe+5;
+			enemy.imagenEnemy = imagenEnemy.getSubimage(500,0,500,500);
 		}
 
-		else if(t==83)
-		{
-			y = y+5;
-			personaje.imagen = imagen.getSubimage(0,0,500,500);
-		}
-		else if(t==87)
-		{
-			y = y-5;
-			personaje.imagen = imagen.getSubimage(500,500,500,500);
-		}
-
-		personaje.setLocation(x,y);
+		enemy.setLocation(xe,ye);
 	}
 
 	public void keyReleased(KeyEvent e) {
 
-		/* System.out.println("Tecla liberada."); */
 	}
 
 	public void keyTyped(KeyEvent e) {
 
-		/* System.out.println("Tecla en el Buffer."); */
 	}
-
 }

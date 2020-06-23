@@ -16,5 +16,6 @@ class Krita extends JPanel {
 
 		super.paintComponent(g);
 		g.drawImage(imagen, 0, 0, 700, 500, null);
+		setOpaque(false);
 	}
 }
