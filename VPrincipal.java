@@ -10,19 +10,10 @@ class VPrincipal extends JFrame implements KeyListener {
 
 	JPanel panel;
 	BufferedImage imagenFondo;
-	Krita fondo;
 
 	public VPrincipal() {
 
-		try {
-			imagenFondo = ImageIO.read(new File("C:/Users/luish/OneDrive/Escritorio/GAME/Fondo.png"));
-		} catch (Exception e) {
-			System.out.println("Error: al cargar la imagen.");
-		}
-
-		fondo = new Krita(imagenFondo);
-
-		panel = new JPanel();
+		panel = new CambioDeFondo("./imagenes/Fondo.png");
 		panel.setLayout(null);
 		panel.setFocusable(true);
 		panel.requestFocusInWindow();
@@ -30,7 +21,6 @@ class VPrincipal extends JFrame implements KeyListener {
 		panel.addKeyListener(this);
 
 		this.add(panel);
-		this.add(fondo);
 		this.setTitle("GAME");
 		this.setBounds(0, 0, 700, 500);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,6 +35,7 @@ class VPrincipal extends JFrame implements KeyListener {
 		if (nTecla == 10) {
 			
 			Nivel1 n1 = new Nivel1();
+			this.setVisible(false);
 		}
 	}
 

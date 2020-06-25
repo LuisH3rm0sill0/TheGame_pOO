@@ -6,7 +6,7 @@ class EnemigoFig extends JPanel {
 
 	BufferedImage imagenEnemy;
 
-	public EnemigoFig (BufferedImage imagen) {
+	public EnemigoFig (BufferedImage imagenEnemy) {
 
 		this.imagenEnemy = imagenEnemy;
 	}
@@ -15,7 +15,7 @@ class EnemigoFig extends JPanel {
 	public void paintComponent (Graphics g) {
 
 		super.paintComponent(g);
-		g.drawImage(imagenEnemy, 10, 300, 64, 64, null);
+		g.drawImage(imagenEnemy, 0, 0, 100, 100, null);
 		setOpaque(false);
 	}
 }
