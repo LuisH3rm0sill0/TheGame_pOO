@@ -11,7 +11,6 @@ class Nivel1 extends JFrame implements KeyListener {
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
-	//JPanel enemy;
 	EnemigoFig enemy;
 
 	BufferedImage imagen;

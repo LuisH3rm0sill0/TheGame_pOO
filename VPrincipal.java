@@ -13,7 +13,7 @@ class VPrincipal extends JFrame implements KeyListener {
 
 	public VPrincipal() {
 
-		panel = new CambioDeFondo("./imagenes/Fondo.png");
+		panel = new CambioDeFondo("./imagenes/FondoPrin.png");
 		panel.setLayout(null);
 		panel.setFocusable(true);
 		panel.requestFocusInWindow();
@@ -35,6 +35,12 @@ class VPrincipal extends JFrame implements KeyListener {
 		if (nTecla == 10) {
 			
 			Nivel1 n1 = new Nivel1();
+			this.setVisible(false);
+		}
+
+		if (nTecla == 32) {
+			
+			Nivel2 n2 = new Nivel2();
 			this.setVisible(false);
 		}
 	}
