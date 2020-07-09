@@ -65,11 +65,11 @@ class Nivel1 extends JFrame implements KeyListener {
 
 		int t = e.getKeyCode();
 
-		Point posPer = personaje.getLocation();
-		int xp = (int)posPer.getX();
-		int yp = (int)posPer.getY();
-		
 		if (fin == false) {
+
+			Point posPer = personaje.getLocation();
+			int xp = (int)posPer.getX();
+			int yp = (int)posPer.getY();
 
 			if(t==68) {
 
@@ -96,10 +96,12 @@ class Nivel1 extends JFrame implements KeyListener {
 
 	public void keyReleased(KeyEvent e) {
 
+
 	}
 
 	public void keyTyped(KeyEvent e) {
 
+	
 	}
 
 	public void colision() {

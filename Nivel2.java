@@ -4,10 +4,13 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
+import java.util.Random;
 
 class Nivel2 extends JFrame implements KeyListener {
 
 	JPanel panel;
+
+	JLabel lblRojo, lblVerde;
 
 	BufferedImage imagenMoneda;
 	BufferedImage subImagenMoneda;
@@ -24,12 +27,21 @@ class Nivel2 extends JFrame implements KeyListener {
 	boolean fin = false;
 	boolean t = true;
 
+	int puntajeRojo = 0;
+	int puntajeVerde = 0;
+
 	public Nivel2() {
 
 		panel = new CambioDeFondo("./imagenes/FondoN2.png");
 		panel.setLayout(null);
 
-		// Moneda
+		lblVerde = new JLabel ("TEAM GREEN:");
+		lblVerde.setBounds(30, 30, 150, 30);
+
+		lblRojo = new JLabel ("TEAM RED:");
+		lblRojo.setBounds(30, 70, 150, 30);
+
+		//Moneda
 		try {
 			imagenMoneda = ImageIO.read(new File("./imagenes/Coin.png"));
 		} catch (Exception e) {
@@ -38,7 +50,7 @@ class Nivel2 extends JFrame implements KeyListener {
 
 		subImagenMoneda = imagenMoneda.getSubimage(0,0,500,500);
 		moneda = new Moneda(subImagenMoneda);
-		moneda.setBounds(325,205,50,50);
+		moneda.setBounds(325,205,50,50); 
 
 		//Personaje 1
 		try {
@@ -62,6 +74,8 @@ class Nivel2 extends JFrame implements KeyListener {
 		personaje = new Personaje(subImagen);
 		personaje.setBounds(30,210,70,70);
 
+		panel.add(lblRojo);
+		panel.add(lblVerde);
 		panel.add(personaje);
 		panel.add(enemy);
 		panel.add(moneda);
@@ -141,6 +155,8 @@ class Nivel2 extends JFrame implements KeyListener {
 			}
 
 			enemy.setLocation(xe,ye);
+
+			movimientoMoneda();
 		}
 	}
 
@@ -151,4 +167,80 @@ class Nivel2 extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
+
+	public void movimientoMoneda() {
+
+		Reproductor rep = new Reproductor();
+
+		Random numA = new Random();
+		int nx = numA.nextInt(600);
+		int ny = numA.nextInt(400);
+
+		String puntajeVerdeString, puntajeRojoString;
+
+		if (personaje.getBounds().intersects(moneda.getBounds())) {
+
+			puntajeVerde = puntajeVerde + 10;
+			puntajeVerdeString = Integer.toString(puntajeVerde);
+			lblVerde.setText("TEAM GREEN: " +puntajeVerdeString);
+
+			moneda.setLocation(nx,ny);
+
+			if (puntajeVerde == 100) {
+
+				rep.inicializar();  
+
+				for (int i=1; i<3; i++) {
+
+					rep.reproducirNota(64, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(68, 1, 800);
+				}
+			
+				rep.finalizar();
+
+				AvisoVerde avsVerde = new AvisoVerde();
+				this.setVisible(false);
+			}
+		}
+
+		if (enemy.getBounds().intersects(moneda.getBounds())) {
+
+			puntajeRojo = puntajeRojo + 10;
+			puntajeRojoString = Integer.toString(puntajeRojo);
+			lblRojo.setText("TEAM RED: " +puntajeRojoString);
+
+			moneda.setLocation(nx,ny);
+
+			if (puntajeRojo == 100) {
+
+				rep.inicializar(); 
+
+				for (int i=1; i<3; i++) {
+
+					rep.reproducirNota(64, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(68, 1, 800);
+				}
+			
+				rep.finalizar();
+
+				AvisoRojo avsRojo = new AvisoRojo();
+				this.setVisible(false);
+			}
+		}
+	}
+
+	public void cambiarTextoLblVerde (String cadena) {
+
+		this.lblVerde.setText(cadena);
+	}
+
+	public void cambiarTextoLblRojo (String cadena) {
+
+		this.lblRojo.setText(cadena);
+	}
+
 }

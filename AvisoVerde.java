@@ -40,7 +40,7 @@ class AvisoVerde extends JFrame implements ActionListener {
 		if (event.getSource() == this.btnRetry) {
 
 			//Reiniciar partida
-			Nivel1 nivel1Green = new Nivel1();
+			VPrincipal vpGreen = new VPrincipal();
 			this.setVisible(false);
 
 		} else if (event.getSource() == this.btnExit) {

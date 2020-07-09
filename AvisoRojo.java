@@ -40,7 +40,7 @@ class AvisoRojo extends JFrame implements ActionListener {
 		if (event.getSource() == this.btnRetry) {
 
 			//Reiniciar partida
-			Nivel1 nivel1Red = new Nivel1();
+			VPrincipal vpRed = new VPrincipal();
 			this.setVisible(false);
 
 		} else if (event.getSource() == this.btnExit) {
