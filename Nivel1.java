@@ -8,49 +8,79 @@ import java.awt.event.*;
 class Nivel1 extends JFrame implements KeyListener {
 
 	JPanel panel;
+	JLabel lblBarra;
+	JLabel lblTexto1;
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
 	//JPanel enemy;
 	EnemigoFig enemy;
-
 	BufferedImage imagen;
 	BufferedImage subImagen;
 	Personaje personaje;
+
+	//para la monedita
+	
+	BufferedImage imagenMonedita;
+	Moneda monedita;
+
 
 	//para el final
 	Rectangle areaFinal = new Rectangle(640,80,60,340);
 	boolean fin = false;
 
 	public Nivel1() {
-
-		panel = new CambioDeFondo("./imagenes/FondoN1.png");
+		
+		panel = new CambioDeFondo("Mapa.png");
 		panel.setLayout(null);
 
+		lblBarra = new JLabel();
+		lblBarra.setBounds(320, 80, 50 , 30);
+
+		lblTexto1 = new JLabel("Puntos Rojo:");
+		lblTexto1.setBounds(240,80,90,30);
+		
 		//Personaje 1
+
 		try {
-			imagenEnemy = ImageIO.read(new File("./imagenes/BolaEnemy.png"));
+			imagenEnemy = ImageIO.read(new File("OjosRojos.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-
 		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
 		enemy = new EnemigoFig(subImagenEnemy);
 		enemy.setBounds(0,100,100,100);
-
 		//Personaje2
 		try {
-			imagen = ImageIO.read(new File("./imagenes/BolaNegra.png"));
+			imagen = ImageIO.read(new File("OjosVerdes.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-
 		subImagen = imagen.getSubimage(0,0,500,500);
 		personaje = new Personaje(subImagen);
 		personaje.setBounds(0,260,100,100);
 
+		//Moneda calis
+		
+		try{
+			imagenMonedita = ImageIO.read(new File("monedaF.png"));
+		}catch(Exception e){
+			System.out.println("Error al cargar la imagen.");
+		}
+		monedita = new Moneda(imagenMonedita);
+		monedita.setBounds(90, 30, 50, 50);
+
+
+
+
+
+
+
 		panel.add(personaje);
 		panel.add(enemy);
+		panel.add(monedita);
+		panel.add(lblBarra);
+		panel.add(lblTexto1);
 
 		this.add(panel);
 		this.setTitle("NIVEL 1");
@@ -58,7 +88,6 @@ class Nivel1 extends JFrame implements KeyListener {
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
-
 		this.addKeyListener(this);
 	}
 
@@ -108,6 +137,10 @@ class Nivel1 extends JFrame implements KeyListener {
 		Reproductor rep = new Reproductor();
 
 		if (enemy.getBounds().intersects(areaFinal.getBounds())) {
+
+			//Puntuacion
+			this.lblBarra.setText(this.lblBarra.getText()+"55");
+			//
 			
 			rep.inicializar();  
 
@@ -125,7 +158,7 @@ class Nivel1 extends JFrame implements KeyListener {
 
 			AvisoRojo avsR = new AvisoRojo();
 
-			this.setVisible(false);
+			//this.setVisible(false);
 
 		} else if (personaje.getBounds().intersects(areaFinal.getBounds())) {
 

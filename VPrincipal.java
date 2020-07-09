@@ -10,10 +10,11 @@ class VPrincipal extends JFrame implements KeyListener {
 
 	JPanel panel;
 	BufferedImage imagenFondo;
+	
 
 	public VPrincipal() {
 
-		panel = new CambioDeFondo("./imagenes/Fondo.png");
+		panel = new CambioDeFondo("FondoP.png");
 		panel.setLayout(null);
 		panel.setFocusable(true);
 		panel.requestFocusInWindow();
@@ -22,7 +23,7 @@ class VPrincipal extends JFrame implements KeyListener {
 
 		this.add(panel);
 		this.setTitle("GAME");
-		this.setBounds(0, 0, 700, 500);
+		this.setBounds(0, 0, 1450, 850);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);

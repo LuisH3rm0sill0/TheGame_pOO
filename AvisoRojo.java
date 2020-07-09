@@ -10,7 +10,7 @@ class AvisoRojo extends JFrame implements ActionListener {
 
 	public AvisoRojo() {
 
-		panelRojo = new CambioDeFondo("./imagenes/FAvisoRed.png");
+		panelRojo = new CambioDeFondo("WinRojo.png");
 		panelRojo.setLayout(null);
 
 		btnRetry = new JButton("RETRY");

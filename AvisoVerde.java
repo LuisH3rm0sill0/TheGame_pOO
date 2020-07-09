@@ -10,7 +10,7 @@ class AvisoVerde extends JFrame implements ActionListener {
 
 	public AvisoVerde() {
 
-		panelVerde = new CambioDeFondo("./imagenes/FAvisoGreen.png");
+		panelVerde = new CambioDeFondo("WinVerde.png");
 		panelVerde.setLayout(null);
 
 		btnRetry = new JButton("RETRY");
