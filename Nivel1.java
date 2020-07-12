@@ -8,45 +8,49 @@ import java.awt.event.*;
 class Nivel1 extends JFrame implements KeyListener {
 
 	JPanel panel;
+	JLabel lblBarra;
+	JLabel lblTexto1;
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
+	//JPanel enemy;
 	EnemigoFig enemy;
-
 	BufferedImage imagen;
 	BufferedImage subImagen;
 	Personaje personaje;
+
 
 	//para el final
 	Rectangle areaFinal = new Rectangle(640,80,60,340);
 	boolean fin = false;
 
 	public Nivel1() {
-
-		panel = new CambioDeFondo("./imagenes/FondoN1.png");
+		
+		panel = new CambioDeFondo("./imagenes/Mapa.png");
 		panel.setLayout(null);
-
+		
 		//Personaje 1
 		try {
-			imagenEnemy = ImageIO.read(new File("./imagenes/BolaEnemy.png"));
+			imagenEnemy = ImageIO.read(new File("./imagenes/OjosRojos.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-
 		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
 		enemy = new EnemigoFig(subImagenEnemy);
 		enemy.setBounds(0,100,100,100);
-
 		//Personaje2
 		try {
-			imagen = ImageIO.read(new File("./imagenes/BolaNegra.png"));
+			imagen = ImageIO.read(new File("./imagenes/OjosVerdes.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-
 		subImagen = imagen.getSubimage(0,0,500,500);
 		personaje = new Personaje(subImagen);
 		personaje.setBounds(0,260,100,100);
+
+		
+
+
 
 		panel.add(personaje);
 		panel.add(enemy);
@@ -54,10 +58,10 @@ class Nivel1 extends JFrame implements KeyListener {
 		this.add(panel);
 		this.setTitle("NIVEL 1");
 		this.setSize(700, 500);
+		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
-
 		this.addKeyListener(this);
 	}
 
@@ -65,11 +69,11 @@ class Nivel1 extends JFrame implements KeyListener {
 
 		int t = e.getKeyCode();
 
+		Point posPer = personaje.getLocation();
+		int xp = (int)posPer.getX();
+		int yp = (int)posPer.getY();
+		
 		if (fin == false) {
-
-			Point posPer = personaje.getLocation();
-			int xp = (int)posPer.getX();
-			int yp = (int)posPer.getY();
 
 			if(t==68) {
 
@@ -96,12 +100,10 @@ class Nivel1 extends JFrame implements KeyListener {
 
 	public void keyReleased(KeyEvent e) {
 
-
 	}
 
 	public void keyTyped(KeyEvent e) {
 
-	
 	}
 
 	public void colision() {

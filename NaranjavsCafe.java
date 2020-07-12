@@ -2,20 +2,20 @@ import javax.swing.*;
 import java.awt.image.*;
 import java.awt.*;
 
-class Personaje extends JPanel {
+class NaranjavsCafe extends JPanel {
 
-	BufferedImage imagen;
+	BufferedImage imagenNC;
 
-	public Personaje (BufferedImage imagen) {
+	public NaranjavsCafe (BufferedImage imagenNC) {
 
-		this.imagen = imagen;
+		this.imagenNC = imagenNC;
 	}
 
 	@Override
 	public void paintComponent (Graphics g) {
 
 		super.paintComponent(g);
-		g.drawImage(imagen, 0, 0, 100, 100, null);
+		g.drawImage(imagenNC, 0, 0, 300, 90, null);
 		setOpaque(false);
 	}
 }

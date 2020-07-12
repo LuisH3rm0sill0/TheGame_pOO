@@ -5,11 +5,11 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
 import java.util.Random;
-class Nivel2 extends JFrame implements KeyListener
+class Nivel2AA extends JFrame implements KeyListener
 {
 	JPanel panel;
 
-	JLabel lblRojo, lblVerde;
+	JLabel lblAmarillo, lblAzul;
 
 	BufferedImage imagenMoneda;
 	BufferedImage subImagenMoneda;
@@ -34,18 +34,18 @@ class Nivel2 extends JFrame implements KeyListener
 	int puntajeRojo = 0;
 	int puntajeVerde = 0;
 
-	public Nivel2() {
+	public Nivel2AA() {
 
 		panel = new CambioDeFondo("./imagenes/FondoN2.png");
 		panel.setLayout(null);
 
-		lblVerde = new JLabel ("TEAM GREEN:");
-		lblVerde.setBounds(30, 10, 150, 30);
-		lblVerde.setForeground(Color.WHITE);
+		lblAzul = new JLabel ("TEAM BLUE:");
+		lblAzul.setBounds(30, 10, 150, 30);
+		lblAzul.setForeground(Color.WHITE);
 
-		lblRojo = new JLabel ("TEAM RED:");
-		lblRojo.setBounds(190, 10, 150, 30);
-		lblRojo.setForeground(Color.WHITE);
+		lblAmarillo = new JLabel ("TEAM YELLOW:");
+		lblAmarillo.setBounds(190, 10, 150, 30);
+		lblAmarillo.setForeground(Color.WHITE);
 
 		//Moneda
 		try {
@@ -60,7 +60,7 @@ class Nivel2 extends JFrame implements KeyListener
 
 		//Personaje 1
 		try {
-			imagenEnemy = ImageIO.read(new File("./imagenes/OjosRojos.png"));
+			imagenEnemy = ImageIO.read(new File("./imagenes/OjosAmarillos.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
@@ -71,7 +71,7 @@ class Nivel2 extends JFrame implements KeyListener
 
 		//Personaje2
 		try {
-			imagen = ImageIO.read(new File("./imagenes/OjosVerdes.png"));
+			imagen = ImageIO.read(new File("./imagenes/OjosAzules.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
@@ -80,8 +80,8 @@ class Nivel2 extends JFrame implements KeyListener
 		personaje = new Personaje2(subImagen);
 		personaje.setBounds(30,210,70,70);
 
-		panel.add(lblRojo);
-		panel.add(lblVerde);
+		panel.add(lblAmarillo);
+		panel.add(lblAzul);
 		panel.add(personaje);
 		panel.add(enemy);
 		panel.add(moneda);
@@ -223,7 +223,7 @@ class Nivel2 extends JFrame implements KeyListener
 
 			puntajeVerde = puntajeVerde + 10;
 			puntajeVerdeString = Integer.toString(puntajeVerde);
-			lblVerde.setText("TEAM GREEN: " +puntajeVerdeString);
+			lblAzul.setText("TEAM BLUE: " +puntajeVerdeString);
 
 			moneda.setLocation(nx,ny);
 
@@ -241,7 +241,7 @@ class Nivel2 extends JFrame implements KeyListener
 			
 				rep.finalizar();
 
-				AvisoVerde avsVerde = new AvisoVerde();
+				AvisoAzul avsVerde = new AvisoAzul();
 				this.setVisible(false);
 			}
 		}
@@ -250,7 +250,7 @@ class Nivel2 extends JFrame implements KeyListener
 
 			puntajeRojo = puntajeRojo + 10;
 			puntajeRojoString = Integer.toString(puntajeRojo);
-			lblRojo.setText("TEAM RED: " +puntajeRojoString);
+			lblAmarillo.setText("TEAM YELLOW: " +puntajeRojoString);
 
 			moneda.setLocation(nx,ny);
 
@@ -268,7 +268,7 @@ class Nivel2 extends JFrame implements KeyListener
 			
 				rep.finalizar();
 
-				AvisoRojo avsRojo = new AvisoRojo();
+				AvisoAmarillo avsRojo = new AvisoAmarillo();
 				this.setVisible(false);
 			}
 		}
@@ -276,12 +276,12 @@ class Nivel2 extends JFrame implements KeyListener
 
 	public void cambiarTextoLblVerde (String cadena) {
 
-		this.lblVerde.setText(cadena);
+		this.lblAzul.setText(cadena);
 	}
 
 	public void cambiarTextoLblRojo (String cadena) {
 
-		this.lblRojo.setText(cadena);
+		this.lblAmarillo.setText(cadena);
 	}
 
 }

@@ -10,10 +10,10 @@ class AvisoVerde extends JFrame implements ActionListener {
 
 	public AvisoVerde() {
 
-		panelVerde = new CambioDeFondo("./imagenes/FAvisoGreen.png");
+		panelVerde = new CambioDeFondo("./imagenes/WinVerde.png");
 		panelVerde.setLayout(null);
 
-		btnRetry = new JButton("RETRY");
+		btnRetry = new JButton("RETURN");
 		btnRetry.setBounds(300, 215, 100, 30);
 		btnRetry.setBackground(Color.WHITE);
 
@@ -22,11 +22,12 @@ class AvisoVerde extends JFrame implements ActionListener {
 		btnExit.setBackground(Color.WHITE);
 
 		panelVerde.add(btnRetry);
-		panelVerde.add(btnExit);
+		//panelVerde.add(btnExit);
 
 		this.add(panelVerde);
 		this.setTitle("");
 		this.setSize(700, 500);
+		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);

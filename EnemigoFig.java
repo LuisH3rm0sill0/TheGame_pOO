@@ -15,7 +15,7 @@ class EnemigoFig extends JPanel {
 	public void paintComponent (Graphics g) {
 
 		super.paintComponent(g);
-		g.drawImage(imagenEnemy, 0, 0, 70, 70, null);
+		g.drawImage(imagenEnemy, 0, 0, 100, 100, null);
 		setOpaque(false);
 	}
 }

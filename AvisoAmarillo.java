@@ -3,15 +3,15 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 
-class AvisoRojo extends JFrame implements ActionListener {
+class AvisoAmarillo extends JFrame implements ActionListener {
 
-	JPanel panelRojo;
+	JPanel panelAmarillo;
 	JButton btnRetry, btnExit;
 
-	public AvisoRojo() {
+	public AvisoAmarillo() {
 
-		panelRojo = new CambioDeFondo("./imagenes/WinRojo.png");
-		panelRojo.setLayout(null);
+		panelAmarillo = new CambioDeFondo("./imagenes/WinYellow.png");
+		panelAmarillo.setLayout(null);
 
 		btnRetry = new JButton("RETURN");
 		btnRetry.setBounds(300, 215, 100, 30);
@@ -21,10 +21,10 @@ class AvisoRojo extends JFrame implements ActionListener {
 		btnExit.setBounds(300, 255, 100, 30);
 		btnExit.setBackground(Color.WHITE);
 
-		panelRojo.add(btnRetry);
-		//panelRojo.add(btnExit);
+		panelAmarillo.add(btnRetry);
+		//panelVerde.add(btnExit);
 
-		this.add(panelRojo);
+		this.add(panelAmarillo);
 		this.setTitle("");
 		this.setSize(700, 500);
 		this.setLocation(600,250);
@@ -41,7 +41,7 @@ class AvisoRojo extends JFrame implements ActionListener {
 		if (event.getSource() == this.btnRetry) {
 
 			//Reiniciar partida
-			VPrincipal nivel1Red = new VPrincipal();
+			VPrincipal vpBlue = new VPrincipal();
 			this.setVisible(false);
 
 		} else if (event.getSource() == this.btnExit) {
