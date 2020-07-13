@@ -29,6 +29,8 @@ En el segundo nivel los jugadores compiten por la moneda, el que llegue antes a 
 Para el nivel uno, solo se necesitan las teclas "D" y "flecha derecha", cada una para su respectivo jugador. En el nivel dos ya se necesitan las siguientes teclas, una sección para cada personaje:
 
 ![](https://inventwithpython.com/es/18_files/image006.png)
+
+Si se está en el nivel 2 y no desea jugar la partida completa, presione la tecla "P" para desplegar una ventana con un botón que hace regresar al menú principal. 
                 
 ----
 #### Agradecimiento
