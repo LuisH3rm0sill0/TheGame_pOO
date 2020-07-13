@@ -5,36 +5,36 @@ import java.util.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
-class Pausa extends JFrame implements ActionListener
-{
+
+class Pausa extends JFrame implements ActionListener {
+
 	JPanel panel;
 	JButton btnMenu;
 
-	public Pausa()
-	{
+	public Pausa() {
+
 		panel = new CambioDeFondo("./imagenes/menBandera.gif");
 		panel.setLayout(null);
 
 		btnMenu = new JButton("Back to menu");
-		btnMenu.setBounds(190, 20, 120, 30);
+		btnMenu.setBounds(290, 25, 120, 30);
 		btnMenu.setBackground(Color.WHITE);
 
 		panel.add(btnMenu);
 		
-
 		this.add(panel);
 		this.setTitle("Pause");
-		this.setSize(500, 400);
-		this.setLocation(600,250);
+		this.setSize(700, 500);
+		this.setLocation(0,0);
 		this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
 
 		btnMenu.addActionListener(this);
-
 	}
-	public void actionPerformed(ActionEvent event)
-	{
+
+	public void actionPerformed(ActionEvent event) {
+
 		if (event.getSource() == this.btnMenu) {
 
 			//Hacia Nivel2

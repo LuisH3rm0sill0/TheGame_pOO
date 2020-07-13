@@ -5,11 +5,15 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
 import java.util.Random;
-class Nivel2AA extends JFrame implements KeyListener
-{
+
+class Nivel2AA extends JFrame implements KeyListener {
+
 	JPanel panel;
 
 	JLabel lblAmarillo, lblAzul;
+
+	BufferedImage imagenInsPer, imagenInsEn;
+	Instruccion insPersonajeAzul, insEnemigoAmarillo;
 
 	BufferedImage imagenMoneda;
 	BufferedImage subImagenMoneda;
@@ -17,11 +21,11 @@ class Nivel2AA extends JFrame implements KeyListener
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
-	EnemigoFig2 enemy;
+	EnemigoFig enemigoAmarillo;
 
 	BufferedImage imagen;
 	BufferedImage subImagen;
-	Personaje2 personaje;
+	Personaje personajeAzul;
 
 	Rectangle colisionArriba = new Rectangle(0,0,700,50);
 	Rectangle colisionAbajo = new Rectangle(0,450,700,50);
@@ -31,21 +35,41 @@ class Nivel2AA extends JFrame implements KeyListener
 	boolean fin = false;
 	boolean t = true;
 
-	int puntajeRojo = 0;
-	int puntajeVerde = 0;
+	int puntajeAmarillo = 0;
+	int puntajeAzul = 0;
 
 	public Nivel2AA() {
 
 		panel = new CambioDeFondo("./imagenes/FondoN2.png");
 		panel.setLayout(null);
 
+		lblAmarillo = new JLabel ("TEAM YELLOW:");
+		lblAmarillo.setBounds(30, 10, 150, 30);
+		lblAmarillo.setForeground(Color.WHITE);
+
 		lblAzul = new JLabel ("TEAM BLUE:");
-		lblAzul.setBounds(30, 10, 150, 30);
+		lblAzul.setBounds(190, 10, 150, 30);
 		lblAzul.setForeground(Color.WHITE);
 
-		lblAmarillo = new JLabel ("TEAM YELLOW:");
-		lblAmarillo.setBounds(190, 10, 150, 30);
-		lblAmarillo.setForeground(Color.WHITE);
+		// Instruccion del Personaje
+		try {
+			imagenInsPer = ImageIO.read(new File("./imagenes/TeclasPersonaje.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insPersonajeAzul = new Instruccion(imagenInsPer);
+		insPersonajeAzul.setBounds(25,145,80,60); 
+
+		// Instruccion del Enemigo
+		try {
+			imagenInsEn = ImageIO.read(new File("./imagenes/TeclasEnemigo.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insEnemigoAmarillo = new Instruccion(imagenInsEn);
+		insEnemigoAmarillo.setBounds(585,145,80,60); 
 
 		//Moneda
 		try {
@@ -58,7 +82,7 @@ class Nivel2AA extends JFrame implements KeyListener
 		moneda = new Moneda(subImagenMoneda);
 		moneda.setBounds(325,205,50,50); 
 
-		//Personaje 1
+		//Personaje Amarillo
 		try {
 			imagenEnemy = ImageIO.read(new File("./imagenes/OjosAmarillos.png"));
 		} catch (Exception e) {
@@ -66,10 +90,10 @@ class Nivel2AA extends JFrame implements KeyListener
 		}
 
 		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
-		enemy = new EnemigoFig2(subImagenEnemy);
-		enemy.setBounds(590,210,70,70);
+		enemigoAmarillo = new EnemigoFig(subImagenEnemy);
+		enemigoAmarillo.setBounds(590,210,70,70);
 
-		//Personaje2
+		//Personaje Azul
 		try {
 			imagen = ImageIO.read(new File("./imagenes/OjosAzules.png"));
 		} catch (Exception e) {
@@ -77,19 +101,20 @@ class Nivel2AA extends JFrame implements KeyListener
 		}
 
 		subImagen = imagen.getSubimage(0,0,500,500);
-		personaje = new Personaje2(subImagen);
-		personaje.setBounds(30,210,70,70);
+		personajeAzul = new Personaje(subImagen);
+		personajeAzul.setBounds(30,210,70,70);
 
 		panel.add(lblAmarillo);
 		panel.add(lblAzul);
-		panel.add(personaje);
-		panel.add(enemy);
+		panel.add(personajeAzul);
+		panel.add(enemigoAmarillo);
 		panel.add(moneda);
+		panel.add(insPersonajeAzul);
+		panel.add(insEnemigoAmarillo);
 
 		this.add(panel);
 		this.setTitle("NIVEL 2");
 		this.setSize(700, 500);
-		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -101,7 +126,7 @@ class Nivel2AA extends JFrame implements KeyListener
 
 		int t = e.getKeyCode();
 
-		Point posPer = personaje.getLocation();
+		Point posPer = personajeAzul.getLocation();
 		int xp = (int)posPer.getX();
 		int yp = (int)posPer.getY();
 		
@@ -109,94 +134,112 @@ class Nivel2AA extends JFrame implements KeyListener
 
 			if(t==68) { // der
 
+				insPersonajeAzul.setVisible(false);
+
 				xp = xp+10;
-				personaje.imagen2 = imagen.getSubimage(500,0,500,500);
-				if(personaje.getBounds().intersects(colisionDerecha.getBounds())){
-					xp = xp - 10;
+				personajeAzul.imagen = imagen.getSubimage(500,0,500,500);
+
+				if (personajeAzul.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xp = xp-10;
 				}
 			}
 
 			if(t==65) { // izq
 
 				xp = xp-10;
-				personaje.imagen2 = imagen.getSubimage(0,500,500,500);
-				if(personaje.getBounds().intersects(colisionIzquierda.getBounds())){
-					xp = xp + 10;
+				personajeAzul.imagen = imagen.getSubimage(0,500,500,500);
+
+				if (personajeAzul.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xp = xp+10;
 				}
 			}
 
 			if(t==87) { // arriba
 
 				yp = yp-10;
-				personaje.imagen2 = imagen.getSubimage(500,500,500,500);
-				if(personaje.getBounds().intersects(colisionArriba.getBounds())){
-					yp = yp + 10;
+				personajeAzul.imagen = imagen.getSubimage(500,500,500,500);
+
+				if (personajeAzul.getBounds().intersects(colisionArriba.getBounds())) {
+
+					yp = yp+10;
 				}
 			}
 
 			if(t==83) { // abajo
 
 				yp = yp+10;
-				personaje.imagen2 = imagen.getSubimage(0,0,500,500);
-				if(personaje.getBounds().intersects(colisionAbajo.getBounds())){
-					yp = yp - 10;
+				personajeAzul.imagen = imagen.getSubimage(0,0,500,500);
+
+				if (personajeAzul.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					yp = yp-10;
 				}
 			}
-			personaje.setLocation(xp,yp);
 
+			personajeAzul.setLocation(xp,yp);
 
-			Point posEn = enemy.getLocation();
+			Point posEn = enemigoAmarillo.getLocation();
 			int xe = (int)posEn.getX();
 			int ye = (int)posEn.getY();
-
 
 			if(t==39) { // der
 
 				xe = xe+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,0,500,500);
-				if(enemy.getBounds().intersects(colisionDerecha.getBounds())){
-					xe = xe - 10;
+				enemigoAmarillo.imagenEnemy = imagenEnemy.getSubimage(500,0,500,500);
+
+				if (enemigoAmarillo.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xe = xe-10;
 				}
 			}
 
 			if(t==37) { // izq
 
+				insEnemigoAmarillo.setVisible(false);
+
 				xe = xe-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,500,500,500);
-				if(enemy.getBounds().intersects(colisionIzquierda.getBounds())){
-					xe = xe + 10;
+				enemigoAmarillo.imagenEnemy = imagenEnemy.getSubimage(0,500,500,500);
+
+				if (enemigoAmarillo.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xe = xe+10;
 				}
 			}
 
 			if(t==38) { // arriba
 
 				ye = ye-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,500,500,500);
-				if(enemy.getBounds().intersects(colisionArriba.getBounds())){
-					ye = ye + 10;
+				enemigoAmarillo.imagenEnemy = imagenEnemy.getSubimage(500,500,500,500);
+
+				if (enemigoAmarillo.getBounds().intersects(colisionArriba.getBounds())) {
+
+					ye = ye+10;
 				}
 			}
 
 			if(t==40) { // abajo
 
 				ye = ye+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,0,500,500);
-				if(enemy.getBounds().intersects(colisionAbajo.getBounds())){
-					ye = ye - 10;
+				enemigoAmarillo.imagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
+
+				if (enemigoAmarillo.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					ye = ye-10;
 				}
 			}
 
-			enemy.setLocation(xe,ye);
+			enemigoAmarillo.setLocation(xe,ye);
 
-			movimientoMoneda();
+			movimientoMonedaAA();
 
 			//Ventana de pausa
-			int nTecla = e.getKeyCode();
 
-			if (nTecla == 80) {
+			if (t == 80) {
 			
-			Pausa n1 = new Pausa();
-			this.setVisible(false);
+				Pausa n2 = new Pausa();
+				this.setVisible(false);
 			}
 		}
 	}
@@ -209,25 +252,25 @@ class Nivel2AA extends JFrame implements KeyListener
 
 	}
 
-	public void movimientoMoneda() {
+	public void movimientoMonedaAA() {
 
 		Reproductor rep = new Reproductor();
 
 		Random numA = new Random();
-		int nx = numA.nextInt(600);
+		int nx = numA.nextInt(500);
 		int ny = numA.nextInt(400);
 
-		String puntajeVerdeString, puntajeRojoString;
+		String puntajeAzulString, puntajeAmarilloString;
 
-		if (personaje.getBounds().intersects(moneda.getBounds())) {
+		if (personajeAzul.getBounds().intersects(moneda.getBounds())) {
 
-			puntajeVerde = puntajeVerde + 10;
-			puntajeVerdeString = Integer.toString(puntajeVerde);
-			lblAzul.setText("TEAM BLUE: " +puntajeVerdeString);
+			puntajeAzul = puntajeAzul + 10;
+			puntajeAzulString = Integer.toString(puntajeAzul);
+			lblAzul.setText("TEAM BLUE: " +puntajeAzulString);
 
 			moneda.setLocation(nx,ny);
 
-			if (puntajeVerde == 100) {
+			if (puntajeAzul == 100) {
 
 				rep.inicializar();  
 
@@ -241,20 +284,20 @@ class Nivel2AA extends JFrame implements KeyListener
 			
 				rep.finalizar();
 
-				AvisoAzul avsVerde = new AvisoAzul();
+				AvisoAzul avsAzul = new AvisoAzul();
 				this.setVisible(false);
 			}
 		}
 
-		if (enemy.getBounds().intersects(moneda.getBounds())) {
+		if (enemigoAmarillo.getBounds().intersects(moneda.getBounds())) {
 
-			puntajeRojo = puntajeRojo + 10;
-			puntajeRojoString = Integer.toString(puntajeRojo);
-			lblAmarillo.setText("TEAM YELLOW: " +puntajeRojoString);
+			puntajeAmarillo = puntajeAmarillo + 10;
+			puntajeAmarilloString = Integer.toString(puntajeAmarillo);
+			lblAmarillo.setText("TEAM YEALLOW: " +puntajeAmarilloString);
 
 			moneda.setLocation(nx,ny);
 
-			if (puntajeRojo == 100) {
+			if (puntajeAmarillo == 100) {
 
 				rep.inicializar(); 
 
@@ -268,20 +311,19 @@ class Nivel2AA extends JFrame implements KeyListener
 			
 				rep.finalizar();
 
-				AvisoAmarillo avsRojo = new AvisoAmarillo();
+				AvisoAmarillo avsAmarillo = new AvisoAmarillo();
 				this.setVisible(false);
 			}
 		}
 	}
 
-	public void cambiarTextoLblVerde (String cadena) {
+	public void cambiarTextoLblAzul (String cadena) {
 
 		this.lblAzul.setText(cadena);
 	}
 
-	public void cambiarTextoLblRojo (String cadena) {
+	public void cambiarTextoLblAmarillo (String cadena) {
 
 		this.lblAmarillo.setText(cadena);
 	}
-
 }

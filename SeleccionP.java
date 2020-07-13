@@ -5,8 +5,9 @@ import java.util.*;
 import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
-class SeleccionP extends JFrame implements ActionListener
-{
+
+class SeleccionP extends JFrame implements ActionListener {
+
 	JPanel panel;
 	BufferedImage mngFondo;
 	JButton btnAzAm;
@@ -14,15 +15,15 @@ class SeleccionP extends JFrame implements ActionListener
 	JButton btnRoVe;
 
 	BufferedImage imgAA;
-	AzulvsAmarillo ayA;
+	AzulVsAmarillo ayA;
 
 	BufferedImage imgNC;
-	AzulvsAmarillo nyC;
+	AzulVsAmarillo nyC;
 
 	BufferedImage imgRV;
-	AzulvsAmarillo ryV;
+	AzulVsAmarillo ryV;
 
-	public SeleccionP(){
+	public SeleccionP() {
 
 		panel = new CambioDeFondo("./imagenes/seleccion.png");
 		panel.setLayout(null);
@@ -30,13 +31,13 @@ class SeleccionP extends JFrame implements ActionListener
 		panel.requestFocusInWindow();
 
 		btnAzAm = new JButton("Azul vs Amarillo");
-		btnAzAm.setBounds(150, 100, 150, 30);
+		btnAzAm.setBounds(275, 45, 150, 30);
 		btnAzAm.setBackground(Color.WHITE);
 		btnNaCa = new JButton("Naranja vs Cafe");
-		btnNaCa.setBounds(150, 250, 150, 30);
+		btnNaCa.setBounds(275, 185, 150, 30);
 		btnNaCa.setBackground(Color.WHITE);
 		btnRoVe = new JButton("Verde vs Rojo");
-		btnRoVe.setBounds(150, 400, 150, 30);
+		btnRoVe.setBounds(275, 325, 150, 30);
 		btnRoVe.setBackground(Color.WHITE);
 
 		//Azul y amarillo
@@ -45,8 +46,8 @@ class SeleccionP extends JFrame implements ActionListener
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-		ayA = new AzulvsAmarillo(imgAA);
-		ayA.setBounds(75,135,300,90);
+		ayA = new AzulVsAmarillo(imgAA);
+		ayA.setBounds(200,85,300,90);
 
 		//Naranja y cafe
 		try {
@@ -54,8 +55,8 @@ class SeleccionP extends JFrame implements ActionListener
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-		nyC = new AzulvsAmarillo(imgNC);
-		nyC.setBounds(75, 285, 300, 90);
+		nyC = new AzulVsAmarillo(imgNC);
+		nyC.setBounds(200, 225, 300, 90);
 
 		//Rojo y verde
 		try {
@@ -63,8 +64,9 @@ class SeleccionP extends JFrame implements ActionListener
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
-		ryV = new AzulvsAmarillo(imgRV);
-		ryV.setBounds(75, 435, 300, 90);
+
+		ryV = new AzulVsAmarillo(imgRV);
+		ryV.setBounds(200, 365, 300, 90);
 
 		panel.add(btnAzAm);
 		panel.add(btnNaCa);
@@ -75,7 +77,7 @@ class SeleccionP extends JFrame implements ActionListener
 
 		this.add(panel);
 		this.setTitle("Seleccion de personajes");
-		this.setBounds(600, 250, 450, 600);
+		this.setBounds(0, 0, 700, 500);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -100,14 +102,5 @@ class SeleccionP extends JFrame implements ActionListener
 			Nivel2NC niv2NC = new Nivel2NC();
 			this.setVisible(false);
 		} 
-
-
-		/*else if (event.getSource() == this.btnExit) {
-
-			//Cerrar programa
-			System.exit(ABORT);
-		}*/
 	}
-
-
 }

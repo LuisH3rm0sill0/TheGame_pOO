@@ -5,11 +5,15 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
 import java.util.Random;
-class Nivel2 extends JFrame implements KeyListener
-{
+
+class Nivel2 extends JFrame implements KeyListener {
+
 	JPanel panel;
 
 	JLabel lblRojo, lblVerde;
+
+	BufferedImage imagenInsPer, imagenInsEn;
+	Instruccion insPersonaje, insEnemigo;
 
 	BufferedImage imagenMoneda;
 	BufferedImage subImagenMoneda;
@@ -17,11 +21,11 @@ class Nivel2 extends JFrame implements KeyListener
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
-	EnemigoFig2 enemy;
+	EnemigoFig enemy;
 
 	BufferedImage imagen;
 	BufferedImage subImagen;
-	Personaje2 personaje;
+	Personaje personaje;
 
 	Rectangle colisionArriba = new Rectangle(0,0,700,50);
 	Rectangle colisionAbajo = new Rectangle(0,450,700,50);
@@ -47,6 +51,26 @@ class Nivel2 extends JFrame implements KeyListener
 		lblRojo.setBounds(190, 10, 150, 30);
 		lblRojo.setForeground(Color.WHITE);
 
+		// Instruccion del Personaje
+		try {
+			imagenInsPer = ImageIO.read(new File("./imagenes/TeclasPersonaje.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insPersonaje = new Instruccion(imagenInsPer);
+		insPersonaje.setBounds(25,145,80,60); 
+
+		// Instruccion del Enemigo
+		try {
+			imagenInsEn = ImageIO.read(new File("./imagenes/TeclasEnemigo.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insEnemigo = new Instruccion(imagenInsEn);
+		insEnemigo.setBounds(585,145,80,60); 
+
 		//Moneda
 		try {
 			imagenMoneda = ImageIO.read(new File("./imagenes/Coin.png"));
@@ -60,24 +84,24 @@ class Nivel2 extends JFrame implements KeyListener
 
 		//Personaje 1
 		try {
-			imagenEnemy = ImageIO.read(new File("./imagenes/OjosRojos.png"));
+			imagenEnemy = ImageIO.read(new File("./imagenes/BolaEnemy.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
 
 		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
-		enemy = new EnemigoFig2(subImagenEnemy);
+		enemy = new EnemigoFig(subImagenEnemy);
 		enemy.setBounds(590,210,70,70);
 
 		//Personaje2
 		try {
-			imagen = ImageIO.read(new File("./imagenes/OjosVerdes.png"));
+			imagen = ImageIO.read(new File("./imagenes/BolaNegra.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
 
 		subImagen = imagen.getSubimage(0,0,500,500);
-		personaje = new Personaje2(subImagen);
+		personaje = new Personaje(subImagen);
 		personaje.setBounds(30,210,70,70);
 
 		panel.add(lblRojo);
@@ -85,11 +109,12 @@ class Nivel2 extends JFrame implements KeyListener
 		panel.add(personaje);
 		panel.add(enemy);
 		panel.add(moneda);
+		panel.add(insEnemigo);
+		panel.add(insPersonaje);
 
 		this.add(panel);
 		this.setTitle("NIVEL 2");
 		this.setSize(700, 500);
-		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -109,80 +134,99 @@ class Nivel2 extends JFrame implements KeyListener
 
 			if(t==68) { // der
 
+				insPersonaje.setVisible(false);
+
 				xp = xp+10;
-				personaje.imagen2 = imagen.getSubimage(500,0,500,500);
-				if(personaje.getBounds().intersects(colisionDerecha.getBounds())){
-					xp = xp - 10;
+				personaje.imagen = imagen.getSubimage(500,0,500,500);
+
+				if (personaje.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xp = xp-10;
 				}
 			}
 
 			if(t==65) { // izq
 
 				xp = xp-10;
-				personaje.imagen2 = imagen.getSubimage(0,500,500,500);
-				if(personaje.getBounds().intersects(colisionIzquierda.getBounds())){
-					xp = xp + 10;
+				personaje.imagen = imagen.getSubimage(0,500,500,500);
+
+				if (personaje.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xp = xp+10;
 				}
 			}
 
 			if(t==87) { // arriba
 
 				yp = yp-10;
-				personaje.imagen2 = imagen.getSubimage(500,500,500,500);
-				if(personaje.getBounds().intersects(colisionArriba.getBounds())){
-					yp = yp + 10;
+				personaje.imagen = imagen.getSubimage(500,500,500,500);
+
+				if (personaje.getBounds().intersects(colisionArriba.getBounds())) {
+
+					yp = yp+10;
 				}
 			}
 
 			if(t==83) { // abajo
 
 				yp = yp+10;
-				personaje.imagen2 = imagen.getSubimage(0,0,500,500);
-				if(personaje.getBounds().intersects(colisionAbajo.getBounds())){
-					yp = yp - 10;
+				personaje.imagen = imagen.getSubimage(0,0,500,500);
+
+				if (personaje.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					yp = yp-10;
 				}
 			}
-			personaje.setLocation(xp,yp);
 
+			personaje.setLocation(xp,yp);
 
 			Point posEn = enemy.getLocation();
 			int xe = (int)posEn.getX();
 			int ye = (int)posEn.getY();
 
-
 			if(t==39) { // der
 
 				xe = xe+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,0,500,500);
-				if(enemy.getBounds().intersects(colisionDerecha.getBounds())){
-					xe = xe - 10;
+				enemy.imagenEnemy = imagenEnemy.getSubimage(500,0,500,500);
+
+				if (enemy.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xe = xe-10;
 				}
 			}
 
 			if(t==37) { // izq
 
+				insEnemigo.setVisible(false);
+
 				xe = xe-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,500,500,500);
-				if(enemy.getBounds().intersects(colisionIzquierda.getBounds())){
-					xe = xe + 10;
+				enemy.imagenEnemy = imagenEnemy.getSubimage(0,500,500,500);
+
+				if (enemy.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xe = xe+10;
 				}
 			}
 
 			if(t==38) { // arriba
 
 				ye = ye-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,500,500,500);
-				if(enemy.getBounds().intersects(colisionArriba.getBounds())){
-					ye = ye + 10;
+				enemy.imagenEnemy = imagenEnemy.getSubimage(500,500,500,500);
+
+				if (enemy.getBounds().intersects(colisionArriba.getBounds())) {
+
+					ye = ye+10;
 				}
 			}
 
 			if(t==40) { // abajo
 
 				ye = ye+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,0,500,500);
-				if(enemy.getBounds().intersects(colisionAbajo.getBounds())){
-					ye = ye - 10;
+				enemy.imagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
+
+				if (enemy.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					ye = ye-10;
 				}
 			}
 
@@ -191,12 +235,11 @@ class Nivel2 extends JFrame implements KeyListener
 			movimientoMoneda();
 
 			//Ventana de pausa
-			int nTecla = e.getKeyCode();
 
-			if (nTecla == 80) {
+			if (t == 80) {
 			
-			Pausa n1 = new Pausa();
-			this.setVisible(false);
+				Pausa n1 = new Pausa();
+				this.setVisible(false);
 			}
 		}
 	}
@@ -214,7 +257,7 @@ class Nivel2 extends JFrame implements KeyListener
 		Reproductor rep = new Reproductor();
 
 		Random numA = new Random();
-		int nx = numA.nextInt(600);
+		int nx = numA.nextInt(500);
 		int ny = numA.nextInt(400);
 
 		String puntajeVerdeString, puntajeRojoString;
@@ -283,5 +326,4 @@ class Nivel2 extends JFrame implements KeyListener
 
 		this.lblRojo.setText(cadena);
 	}
-
 }

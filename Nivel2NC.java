@@ -5,11 +5,15 @@ import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
 import java.util.Random;
-class Nivel2NC extends JFrame implements KeyListener
-{
+
+class Nivel2NC extends JFrame implements KeyListener {
+
 	JPanel panel;
 
-	JLabel lblCafe, lblNaranja;
+	JLabel lblNaranja, lblCafe;
+
+	BufferedImage imagenInsPer, imagenInsEn;
+	Instruccion insPersonajeCafe, insEnemigoNaranja;
 
 	BufferedImage imagenMoneda;
 	BufferedImage subImagenMoneda;
@@ -17,11 +21,11 @@ class Nivel2NC extends JFrame implements KeyListener
 
 	BufferedImage imagenEnemy;
 	BufferedImage subImagenEnemy;
-	EnemigoFig2 enemy;
+	EnemigoFig enemigoNaranja;
 
 	BufferedImage imagen;
 	BufferedImage subImagen;
-	Personaje2 personaje;
+	Personaje personajeCafe;
 
 	Rectangle colisionArriba = new Rectangle(0,0,700,50);
 	Rectangle colisionAbajo = new Rectangle(0,450,700,50);
@@ -31,8 +35,8 @@ class Nivel2NC extends JFrame implements KeyListener
 	boolean fin = false;
 	boolean t = true;
 
-	int puntajeRojo = 0;
-	int puntajeVerde = 0;
+	int puntajeNaranja = 0;
+	int puntajeCafe = 0;
 
 	public Nivel2NC() {
 
@@ -47,6 +51,26 @@ class Nivel2NC extends JFrame implements KeyListener
 		lblCafe.setBounds(190, 10, 150, 30);
 		lblCafe.setForeground(Color.WHITE);
 
+		// Instruccion del Personaje
+		try {
+			imagenInsPer = ImageIO.read(new File("./imagenes/TeclasPersonaje.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insPersonajeCafe = new Instruccion(imagenInsPer);
+		insPersonajeCafe.setBounds(25,145,80,60); 
+
+		// Instruccion del Enemigo
+		try {
+			imagenInsEn = ImageIO.read(new File("./imagenes/TeclasEnemigo.png"));
+		} catch (Exception e) {
+			System.out.println("Error: al cargar la imagen.");
+		}
+
+		insEnemigoNaranja = new Instruccion(imagenInsEn);
+		insEnemigoNaranja.setBounds(585,145,80,60); 
+
 		//Moneda
 		try {
 			imagenMoneda = ImageIO.read(new File("./imagenes/Coin.png"));
@@ -58,38 +82,39 @@ class Nivel2NC extends JFrame implements KeyListener
 		moneda = new Moneda(subImagenMoneda);
 		moneda.setBounds(325,205,50,50); 
 
-		//Personaje 1
+		//Personaje Naranja
 		try {
-			imagenEnemy = ImageIO.read(new File("./imagenes/OjosCafes.png"));
+			imagenEnemy = ImageIO.read(new File("./imagenes/OjosNaranjas.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
 
 		subImagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
-		enemy = new EnemigoFig2(subImagenEnemy);
-		enemy.setBounds(590,210,70,70);
+		enemigoNaranja = new EnemigoFig(subImagenEnemy);
+		enemigoNaranja.setBounds(590,210,70,70);
 
-		//Personaje2
+		//Personaje Cafe
 		try {
-			imagen = ImageIO.read(new File("./imagenes/OjosNaranjas.png"));
+			imagen = ImageIO.read(new File("./imagenes/OjosCafes.png"));
 		} catch (Exception e) {
 			System.out.println("Error: al cargar la imagen.");
 		}
 
 		subImagen = imagen.getSubimage(0,0,500,500);
-		personaje = new Personaje2(subImagen);
-		personaje.setBounds(30,210,70,70);
+		personajeCafe = new Personaje(subImagen);
+		personajeCafe.setBounds(30,210,70,70);
 
-		panel.add(lblCafe);
 		panel.add(lblNaranja);
-		panel.add(personaje);
-		panel.add(enemy);
+		panel.add(lblCafe);
+		panel.add(personajeCafe);
+		panel.add(enemigoNaranja);
 		panel.add(moneda);
-
+		panel.add(insPersonajeCafe);
+		panel.add(insEnemigoNaranja);
+		
 		this.add(panel);
 		this.setTitle("NIVEL 2");
 		this.setSize(700, 500);
-		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -101,7 +126,7 @@ class Nivel2NC extends JFrame implements KeyListener
 
 		int t = e.getKeyCode();
 
-		Point posPer = personaje.getLocation();
+		Point posPer = personajeCafe.getLocation();
 		int xp = (int)posPer.getX();
 		int yp = (int)posPer.getY();
 		
@@ -109,94 +134,112 @@ class Nivel2NC extends JFrame implements KeyListener
 
 			if(t==68) { // der
 
+				insPersonajeCafe.setVisible(false);
+
 				xp = xp+10;
-				personaje.imagen2 = imagen.getSubimage(500,0,500,500);
-				if(personaje.getBounds().intersects(colisionDerecha.getBounds())){
-					xp = xp - 10;
+				personajeCafe.imagen = imagen.getSubimage(500,0,500,500);
+
+				if (personajeCafe.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xp = xp-10;
 				}
 			}
 
 			if(t==65) { // izq
 
 				xp = xp-10;
-				personaje.imagen2 = imagen.getSubimage(0,500,500,500);
-				if(personaje.getBounds().intersects(colisionIzquierda.getBounds())){
-					xp = xp + 10;
+				personajeCafe.imagen = imagen.getSubimage(0,500,500,500);
+
+				if (personajeCafe.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xp = xp+10;
 				}
 			}
 
 			if(t==87) { // arriba
 
 				yp = yp-10;
-				personaje.imagen2 = imagen.getSubimage(500,500,500,500);
-				if(personaje.getBounds().intersects(colisionArriba.getBounds())){
-					yp = yp + 10;
+				personajeCafe.imagen = imagen.getSubimage(500,500,500,500);
+
+				if (personajeCafe.getBounds().intersects(colisionArriba.getBounds())) {
+
+					yp = yp+10;
 				}
 			}
 
 			if(t==83) { // abajo
 
 				yp = yp+10;
-				personaje.imagen2 = imagen.getSubimage(0,0,500,500);
-				if(personaje.getBounds().intersects(colisionAbajo.getBounds())){
-					yp = yp - 10;
+				personajeCafe.imagen = imagen.getSubimage(0,0,500,500);
+
+				if (personajeCafe.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					yp = yp-10;
 				}
 			}
-			personaje.setLocation(xp,yp);
 
+			personajeCafe.setLocation(xp,yp);
 
-			Point posEn = enemy.getLocation();
+			Point posEn = enemigoNaranja.getLocation();
 			int xe = (int)posEn.getX();
 			int ye = (int)posEn.getY();
-
 
 			if(t==39) { // der
 
 				xe = xe+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,0,500,500);
-				if(enemy.getBounds().intersects(colisionDerecha.getBounds())){
-					xe = xe - 10;
+				enemigoNaranja.imagenEnemy = imagenEnemy.getSubimage(500,0,500,500);
+
+				if (enemigoNaranja.getBounds().intersects(colisionDerecha.getBounds())) {
+
+					xe = xe-10;
 				}
 			}
 
 			if(t==37) { // izq
 
+				insEnemigoNaranja.setVisible(false);
+
 				xe = xe-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,500,500,500);
-				if(enemy.getBounds().intersects(colisionIzquierda.getBounds())){
-					xe = xe + 10;
+				enemigoNaranja.imagenEnemy = imagenEnemy.getSubimage(0,500,500,500);
+
+				if (enemigoNaranja.getBounds().intersects(colisionIzquierda.getBounds())) {
+
+					xe = xe+10;
 				}
 			}
 
 			if(t==38) { // arriba
 
 				ye = ye-10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(500,500,500,500);
-				if(enemy.getBounds().intersects(colisionArriba.getBounds())){
-					ye = ye + 10;
+				enemigoNaranja.imagenEnemy = imagenEnemy.getSubimage(500,500,500,500);
+
+				if (enemigoNaranja.getBounds().intersects(colisionArriba.getBounds())) {
+
+					ye = ye+10;
 				}
 			}
 
 			if(t==40) { // abajo
 
 				ye = ye+10;
-				enemy.imagenEnemy2 = imagenEnemy.getSubimage(0,0,500,500);
-				if(enemy.getBounds().intersects(colisionAbajo.getBounds())){
-					ye = ye - 10;
+				enemigoNaranja.imagenEnemy = imagenEnemy.getSubimage(0,0,500,500);
+
+				if (enemigoNaranja.getBounds().intersects(colisionAbajo.getBounds())) {
+
+					ye = ye-10;
 				}
 			}
 
-			enemy.setLocation(xe,ye);
+			enemigoNaranja.setLocation(xe,ye);
 
-			movimientoMoneda();
+			movimientoMonedaNC();
 
 			//Ventana de pausa
-			int nTecla = e.getKeyCode();
 
-			if (nTecla == 80) {
+			if (t == 80) {
 			
-			Pausa n1 = new Pausa();
-			this.setVisible(false);
+				Pausa n3 = new Pausa();
+				this.setVisible(false);
 			}
 		}
 	}
@@ -209,54 +252,27 @@ class Nivel2NC extends JFrame implements KeyListener
 
 	}
 
-	public void movimientoMoneda() {
+	public void movimientoMonedaNC() {
 
 		Reproductor rep = new Reproductor();
 
 		Random numA = new Random();
-		int nx = numA.nextInt(600);
+		int nx = numA.nextInt(500);
 		int ny = numA.nextInt(400);
 
-		String puntajeVerdeString, puntajeRojoString;
+		String puntajeCafeString, puntajeNaranjaString;
 
-		if (personaje.getBounds().intersects(moneda.getBounds())) {
+		if (personajeCafe.getBounds().intersects(moneda.getBounds())) {
 
-			puntajeVerde = puntajeVerde + 10;
-			puntajeVerdeString = Integer.toString(puntajeVerde);
-			lblNaranja.setText("TEAM ORANGE: " +puntajeVerdeString);
+			puntajeCafe = puntajeCafe + 10;
+			puntajeCafeString = Integer.toString(puntajeCafe);
+			lblCafe.setText("TEAM BROWN: " +puntajeCafeString);
 
 			moneda.setLocation(nx,ny);
 
-			if (puntajeVerde == 100) {
+			if (puntajeCafe == 100) {
 
 				rep.inicializar();  
-
-				for (int i=1; i<3; i++) {
-
-					rep.reproducirNota(64, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(68, 1, 800);
-				}
-			
-				rep.finalizar();
-
-				AvisoNaranja avsNaranja = new AvisoNaranja();
-				this.setVisible(false);
-			}
-		}
-
-		if (enemy.getBounds().intersects(moneda.getBounds())) {
-
-			puntajeRojo = puntajeRojo + 10;
-			puntajeRojoString = Integer.toString(puntajeRojo);
-			lblCafe.setText("TEAM BROWN: " +puntajeRojoString);
-
-			moneda.setLocation(nx,ny);
-
-			if (puntajeRojo == 100) {
-
-				rep.inicializar(); 
 
 				for (int i=1; i<3; i++) {
 
@@ -272,16 +288,42 @@ class Nivel2NC extends JFrame implements KeyListener
 				this.setVisible(false);
 			}
 		}
+
+		if (enemigoNaranja.getBounds().intersects(moneda.getBounds())) {
+
+			puntajeNaranja = puntajeNaranja + 10;
+			puntajeNaranjaString = Integer.toString(puntajeNaranja);
+			lblNaranja.setText("TEAM ORANGE: " +puntajeNaranjaString);
+
+			moneda.setLocation(nx,ny);
+
+			if (puntajeNaranja == 100) {
+
+				rep.inicializar(); 
+
+				for (int i=1; i<3; i++) {
+
+					rep.reproducirNota(64, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(60, 1, 150);
+					rep.reproducirNota(68, 1, 800);
+				}
+			
+				rep.finalizar();
+
+				AvisoNaranja avsNaranja = new AvisoNaranja();
+				this.setVisible(false);
+			}
+		}
 	}
 
-	public void cambiarTextoLblVerde (String cadena) {
-
-		this.lblNaranja.setText(cadena);
-	}
-
-	public void cambiarTextoLblRojo (String cadena) {
+	public void cambiarTextoLblCafe (String cadena) {
 
 		this.lblCafe.setText(cadena);
 	}
 
+	public void cambiarTextoLblNaranja (String cadena) {
+
+		this.lblNaranja.setText(cadena);
+	}
 }

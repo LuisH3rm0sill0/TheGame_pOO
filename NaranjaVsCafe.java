@@ -2,20 +2,20 @@ import javax.swing.*;
 import java.awt.image.*;
 import java.awt.*;
 
-class Moneda extends JPanel {
+class NaranjaVsCafe extends JPanel {
 
-	BufferedImage imagenMoneda;
+	BufferedImage imagenNC;
 
-	public Moneda (BufferedImage imagenMoneda) {
+	public NaranjaVsCafe (BufferedImage imagenNC) {
 
-		this.imagenMoneda = imagenMoneda;
+		this.imagenNC = imagenNC;
 	}
 
 	@Override
 	public void paintComponent (Graphics g) {
 
 		super.paintComponent(g);
-		g.drawImage(imagenMoneda, 0, 0, 50, 50, null);
+		g.drawImage(imagenNC, 0, 0, 300, 90, null);
 		setOpaque(false);
 	}
 }

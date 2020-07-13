@@ -6,34 +6,27 @@ import java.util.*;
 class AvisoRojo extends JFrame implements ActionListener {
 
 	JPanel panelRojo;
-	JButton btnRetry, btnExit;
+	JButton btnRetry;
 
 	public AvisoRojo() {
 
-		panelRojo = new CambioDeFondo("./imagenes/WinRojo.png");
+		panelRojo = new CambioDeFondo("./imagenes/FAvisoRed.png");
 		panelRojo.setLayout(null);
 
-		btnRetry = new JButton("RETURN");
-		btnRetry.setBounds(300, 215, 100, 30);
+		btnRetry = new JButton("BACK TO MENU");
+		btnRetry.setBounds(275, 225, 150, 50);
 		btnRetry.setBackground(Color.WHITE);
 
-		btnExit = new JButton("EXIT");
-		btnExit.setBounds(300, 255, 100, 30);
-		btnExit.setBackground(Color.WHITE);
-
 		panelRojo.add(btnRetry);
-		//panelRojo.add(btnExit);
 
 		this.add(panelRojo);
 		this.setTitle("");
 		this.setSize(700, 500);
-		this.setLocation(600,250);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
 
 		btnRetry.addActionListener(this);
-		btnExit.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent event) {
@@ -41,13 +34,8 @@ class AvisoRojo extends JFrame implements ActionListener {
 		if (event.getSource() == this.btnRetry) {
 
 			//Reiniciar partida
-			VPrincipal nivel1Red = new VPrincipal();
+			VPrincipal vpRed = new VPrincipal();
 			this.setVisible(false);
-
-		} else if (event.getSource() == this.btnExit) {
-
-			//Cerrar programa
-			System.exit(ABORT);
-		}
+		} 
 	}
 }

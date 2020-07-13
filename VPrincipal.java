@@ -10,7 +10,6 @@ class VPrincipal extends JFrame implements KeyListener {
 
 	JPanel panel;
 	BufferedImage imagenFondo;
-	
 
 	public VPrincipal() {
 
@@ -23,7 +22,7 @@ class VPrincipal extends JFrame implements KeyListener {
 
 		this.add(panel);
 		this.setTitle("GAME");
-		this.setBounds(600, 250, 700, 500);
+		this.setBounds(0, 0, 700, 500);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
@@ -41,7 +40,7 @@ class VPrincipal extends JFrame implements KeyListener {
 
 		if (nTecla == 32) {
 			
-			SeleccionP n2 = new SeleccionP();
+			SeleccionP select = new SeleccionP();
 			this.setVisible(false);
 		}
 	}
