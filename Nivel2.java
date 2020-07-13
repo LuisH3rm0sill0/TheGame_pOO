@@ -1,3 +1,4 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -37,6 +38,8 @@ class Nivel2 extends JFrame implements KeyListener {
 
 	int puntajeRojo = 0;
 	int puntajeVerde = 0;
+
+	Reproductor rep = new Reproductor();
 
 	public Nivel2() {
 
@@ -254,8 +257,6 @@ class Nivel2 extends JFrame implements KeyListener {
 
 	public void movimientoMoneda() {
 
-		Reproductor rep = new Reproductor();
-
 		Random numA = new Random();
 		int nx = numA.nextInt(500);
 		int ny = numA.nextInt(400);
@@ -272,17 +273,7 @@ class Nivel2 extends JFrame implements KeyListener {
 
 			if (puntajeVerde == 100) {
 
-				rep.inicializar();  
-
-				for (int i=1; i<3; i++) {
-
-					rep.reproducirNota(64, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(68, 1, 800);
-				}
-			
-				rep.finalizar();
+				leerNotasDeArchivoN2();
 
 				AvisoVerde avsVerde = new AvisoVerde();
 				this.setVisible(false);
@@ -299,22 +290,28 @@ class Nivel2 extends JFrame implements KeyListener {
 
 			if (puntajeRojo == 100) {
 
-				rep.inicializar(); 
-
-				for (int i=1; i<3; i++) {
-
-					rep.reproducirNota(64, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(68, 1, 800);
-				}
-			
-				rep.finalizar();
+				leerNotasDeArchivoN2();
 
 				AvisoRojo avsRojo = new AvisoRojo();
 				this.setVisible(false);
 			}
 		}
+	}
+
+	public void leerNotasDeArchivoN2() {
+
+		rep.inicializar();
+
+		ArrayList<String> notasArchivo = new ArrayList<String>();
+		notasArchivo = Reproductor.LeerNotas("notasA.txt");
+
+		for (int i=0; i<notasArchivo.size(); i++) {
+
+			int n = Integer.parseInt(notasArchivo.get(i));
+			rep.reproducirNota(n, 1, 150);
+		}
+
+		rep.finalizar();
 	}
 
 	public void cambiarTextoLblVerde (String cadena) {

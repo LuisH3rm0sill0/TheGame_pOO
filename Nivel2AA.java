@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
+import java.util.*;
 import java.io.*;
 import javax.imageio.*;
 import java.awt.event.*;
@@ -37,6 +38,8 @@ class Nivel2AA extends JFrame implements KeyListener {
 
 	int puntajeAmarillo = 0;
 	int puntajeAzul = 0;
+
+	Reproductor rep = new Reproductor();
 
 	public Nivel2AA() {
 
@@ -272,17 +275,7 @@ class Nivel2AA extends JFrame implements KeyListener {
 
 			if (puntajeAzul == 100) {
 
-				rep.inicializar();  
-
-				for (int i=1; i<3; i++) {
-
-					rep.reproducirNota(64, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(68, 1, 800);
-				}
-			
-				rep.finalizar();
+				leerNotasDeArchivoN2AA();
 
 				AvisoAzul avsAzul = new AvisoAzul();
 				this.setVisible(false);
@@ -299,22 +292,28 @@ class Nivel2AA extends JFrame implements KeyListener {
 
 			if (puntajeAmarillo == 100) {
 
-				rep.inicializar(); 
-
-				for (int i=1; i<3; i++) {
-
-					rep.reproducirNota(64, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(60, 1, 150);
-					rep.reproducirNota(68, 1, 800);
-				}
-			
-				rep.finalizar();
+				leerNotasDeArchivoN2AA();
 
 				AvisoAmarillo avsAmarillo = new AvisoAmarillo();
 				this.setVisible(false);
 			}
 		}
+	}
+
+	public void leerNotasDeArchivoN2AA() {
+
+		rep.inicializar();
+
+		ArrayList<String> notasArchivo = new ArrayList<String>();
+		notasArchivo = Reproductor.LeerNotas("notasA.txt");
+
+		for (int i=0; i<notasArchivo.size(); i++) {
+
+			int n = Integer.parseInt(notasArchivo.get(i));
+			rep.reproducirNota(n, 1, 150);
+		}
+
+		rep.finalizar();
 	}
 
 	public void cambiarTextoLblAzul (String cadena) {

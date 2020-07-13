@@ -1,3 +1,5 @@
+import java.util.*;
+import java.io.*;
 import javax.sound.midi.*;
 
 class Reproductor{
@@ -44,6 +46,31 @@ class Reproductor{
 		}
 
 		channel.noteOff(nota);
+	}
+
+	public static ArrayList<String> LeerNotas(String nombreArchivo) {
+
+		ArrayList<String> notasArchivo = new ArrayList<String>();
+		String rdNota = new String();
+
+		try(FileInputStream fis = new FileInputStream(nombreArchivo);
+			DataInputStream din = new DataInputStream(fis);
+			BufferedReader br = new BufferedReader(new InputStreamReader(din));) {
+
+			rdNota = br.readLine();
+
+			while(rdNota != null) {
+
+				notasArchivo.add(rdNota);
+				rdNota = br.readLine();
+			}
+
+		} catch(Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return notasArchivo;
 	}
 
 	public void finalizar(){

@@ -1,3 +1,4 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -23,6 +24,8 @@ class Nivel1 extends JFrame implements KeyListener {
 	//para el final
 	Rectangle areaFinal = new Rectangle(660,80,50,340);
 	boolean fin = false;
+
+	Reproductor rep = new Reproductor();
 
 	public Nivel1() {
 
@@ -143,21 +146,9 @@ class Nivel1 extends JFrame implements KeyListener {
 
 	public void colision() {
 
-		Reproductor rep = new Reproductor();
-
 		if (enemy.getBounds().intersects(areaFinal.getBounds())) {
 			
-			rep.inicializar();  
-
-			for (int i=1; i<3; i++) {
-
-				rep.reproducirNota(64, 1, 150);
-				rep.reproducirNota(60, 1, 150);
-				rep.reproducirNota(60, 1, 150);
-				rep.reproducirNota(68, 1, 800);
-			}
-			
-			rep.finalizar();
+			leerNotasDeArchivoN1();
 
 			this.fin = true;
 
@@ -167,17 +158,7 @@ class Nivel1 extends JFrame implements KeyListener {
 
 		} else if (personaje.getBounds().intersects(areaFinal.getBounds())) {
 
-			rep.inicializar();
-
-			for (int i=1; i<3; i++) {
-
-				rep.reproducirNota(64, 1, 150);
-				rep.reproducirNota(60, 1, 150);
-				rep.reproducirNota(60, 1, 150);
-				rep.reproducirNota(68, 1, 800);
-			}
-			
-			rep.finalizar();
+			leerNotasDeArchivoN1();
 
 			this.fin = true;
 
@@ -185,5 +166,21 @@ class Nivel1 extends JFrame implements KeyListener {
 
 			this.setVisible(false);
 		}
+	}
+
+	public void leerNotasDeArchivoN1() {
+
+		rep.inicializar();
+
+		ArrayList<String> notasArchivo = new ArrayList<String>();
+		notasArchivo = Reproductor.LeerNotas("notasA.txt");
+
+		for (int i=0; i<notasArchivo.size(); i++) {
+
+			int n = Integer.parseInt(notasArchivo.get(i));
+			rep.reproducirNota(n, 1, 150);
+		}
+
+		rep.finalizar();
 	}
 }
