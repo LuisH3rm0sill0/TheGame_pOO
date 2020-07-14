@@ -9,6 +9,16 @@ Bienvenido a nuestro repositorio del proyecto final!
 
                 
 ----
+
+#### Instalación
+Busque en el repositorio y descargue el archivo .zip con el nombre "EjecutableP", una vez descargado, extraer el programa java ejecutable ".jar" junto con la carpeta de herramientas. 
+
+![](https://pbs.twimg.com/media/Ec2tPaAUEAEvzux?format=png&name=small)
+
+**Nota:** Es importante que el ejecutable y la carpeta imágenes enten en el mismo directorio para que el programa pueda obtener los recursos necesarios.
+
+                
+----
 #### ¿Qué se verá?
 
 **Estas dos imágenes que se presentan a continuación son los dos minijuegos que creamos:**
@@ -37,5 +47,10 @@ Si se está en el nivel 2 y no desea jugar la partida completa, presione la tecl
 Queremos agradecer al profesor de la materia por haber brindado tiempo, dedicación a la enseñanza durante el semestre, a pesar de las complicaciones y de la desafortunada situación. Gracias por ser de los únicos profesores que se nos dieron muchas herramientas para aprender y no sucumbir en la desesperación.
 
 >13/julio/2020 
+
+>Creadores: Ascencio Salazar Aldair y Hermosillo Rivera Luis Antonio
+
 >[Instituto Tecnologico de Tijuana](https://www.tijuana.tecnm.mx/ "Instituto Tecnológico de Tijuana")
+
+
 
